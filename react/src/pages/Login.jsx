@@ -24,6 +24,7 @@ function Login() {
       const data = await response.json();
       if (!response.ok || !data.login) throw new Error(data.msg || "Usuario o contraseña incorrectos");
       localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", data.token);
       navigate("/home");
     } catch (error) {
       setError(error.message);

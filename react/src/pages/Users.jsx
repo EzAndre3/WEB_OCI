@@ -5,6 +5,7 @@ import { Alert, Box, Button, Container, Paper, Table, TableBody, TableCell, Tabl
 
 function Users() {
   const loggedUser = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
   const [users, setUsers] = useState([]);
   const [form, setForm] = useState({ name: "", username: "", password: "" });
   const [error, setError] = useState("");
@@ -12,7 +13,7 @@ function Users() {
 
   const getUsers = async () => {
     try {
-      const response = await fetch(`${API_URL}/users`);
+      const response = await fetch(`${API_URL}/users`, {headers: { "Authorization": `Bearer ${token}` },});
       const data = await response.json();
       if (!response.ok) throw new Error(data.msg || "Error al obtener usuarios");
       setUsers(data);
@@ -29,7 +30,10 @@ function Users() {
     try {
       const response = await fetch(`${API_URL}/users`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,  // ← Línea nueva
+        },
         body: JSON.stringify(form),
       });
       const data = await response.json();
@@ -43,7 +47,10 @@ function Users() {
   const handleDelete = async (id) => {
     setError(""); setSuccess("");
     try {
-      const response = await fetch(`${API_URL}/users/${id}`, { method: "DELETE" });
+      const response = await fetch(`${API_URL}/users/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${token}` 
+      },})
       const data = await response.json();
       if (!response.ok) throw new Error(data.msg || "Error al eliminar usuario");
       setUsers(users.filter((u) => u._id !== id));
