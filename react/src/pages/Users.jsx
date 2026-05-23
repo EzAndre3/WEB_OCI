@@ -32,7 +32,7 @@ function Users() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,  // ← Línea nueva
+          "Authorization": `Bearer ${token}`, 
         },
         body: JSON.stringify(form),
       });
