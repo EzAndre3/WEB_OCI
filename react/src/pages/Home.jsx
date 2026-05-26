@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavBar";
 import { Container, Typography, Box, Button, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
